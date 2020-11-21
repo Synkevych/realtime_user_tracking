@@ -13,7 +13,7 @@ const Home = styled.div`
   `
 
   const Header = styled.div`
-  padding: 100px 100px 10px 100px;
+  padding: 1em 2em 0.1em 1em;
   h1 {
     font-size: 42px;
   }
@@ -48,7 +48,6 @@ const Users = () => {
 const date_now =  Math.round( Date.now()/1000);
 const online_user_counter = users.reduce(
       (acc, a) => {
-        console.log("attr", date_now - a.attributes.last_seen_at < 5*60); 
         if (date_now - a.attributes.last_seen_at < 5*60 ){
           return acc +1;
         } else {
