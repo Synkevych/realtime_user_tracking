@@ -91,4 +91,10 @@ Rails.application.configure do
 
   # Do not dump schema after migrations.
   config.active_record.dump_schema_after_migration = false
+
+  # Configuration for Action Cable and WebSockets
+  config..web_socket_server_url = "wss://count-online-users.herokuapp.com/cable"
+
+  # Allowed Request Origin 
+  config.action_cable.allowed_request_origins = ['https://count-online-users.herokuapp.com', 'http://count-online-users.herokuapp.com']
 end

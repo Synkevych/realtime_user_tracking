@@ -70,22 +70,26 @@ And now you can visit the site with the URL http://localhost:3000
 
 ##### 5. Deployment to Heroku instructions
 
-`heroku login ; heroku create` - login to your profile  
+`heroku login` - login to your profile  
 `heroku create count-online-users` - create new heroku app with specific name  
 `git push heroku master` - push you project to Heroku server  
 `heroku run rake db:migrate` - run migration on Heroku server  
+`heroku pg:reset` - drop database on Heroku server  
 `heroku open` - open and test your website  
 
 ##### 6. Other useful command
 
-`rails new count_online_users --webpack=react --database=postgresql -T` - create a new app  
+`rails new count_online_users --webpack=react --database=postgresql -T` - create a new app with React and PostgreSQL  
 `rails g model User name ip_address device`  
 `rails db:setup db:create db:migrate`  
-`rails g serializer User name ip_address device`  
+`rails g serializer User name ip_address device, emoji, last_seen_at, visits, online`  
+`rails g channel Activity`  
 `yarn add react-router-dom`  
 `yarn add axios`  
 `yarn add styled-components`  
+`git add -A && git commit -m "fix: message"`  
+``
 
 ## Feedback
 
-Feel free to send us feedback on [Twitter](https://twitter.com/synkevych) or [file an issue](https://github.com/Synkevych/ProjID-HR014/issues/new). Feature requests are always welcome.
+Feel free to send us feedback on [Twitter](https://twitter.com/synkevych) or [file an issue](https://github.com/Synkevych/realtime_user_tracking/issues/new). Feature requests are always welcome.

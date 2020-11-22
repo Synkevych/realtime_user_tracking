@@ -3,7 +3,7 @@ import axios from 'axios';
 import User from './User';
 import styled from 'styled-components';
 
-const date_now =  Math.round( Date.now()/1000);
+const date_in_seconds =  Math.round( Date.now()/1000);
 
 const Home = styled.div`
   text-line: center;
@@ -46,7 +46,9 @@ const Users = () => {
   
   const online_user_counter = users.reduce(
         (acc, a) => {
-          if (date_now - a.attributes.last_seen_at < 5*60 ){
+          const last_seen_at = Math.round((date_in_seconds - a.attributes.last_seen_at));
+          
+          if (last_seen_at < 60 ){
             return acc +1;
           } else {
             return acc;

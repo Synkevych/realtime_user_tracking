@@ -29,7 +29,7 @@ App.activity = App.cable.subscriptions.create("ActivityChannel", {
         document.querySelector(`${userName}:last-child`).style.backgroundColor = "#efefef";
         document.querySelector(`#${userName} div:last-child a`).innerHTML = "Offline";
       }
-    }, 100);
+    }, 1000);
     
   },
 
