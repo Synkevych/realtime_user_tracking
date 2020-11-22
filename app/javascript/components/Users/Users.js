@@ -46,9 +46,7 @@ const Users = () => {
   
   const online_user_counter = users.reduce(
         (acc, a) => {
-          const last_seen_at = Math.round((date_in_seconds - a.attributes.last_seen_at));
-          
-          if (last_seen_at < 60 ){
+          if ( a.attributes.online ){
             return acc +1;
           } else {
             return acc;
@@ -63,7 +61,7 @@ const Users = () => {
     <Home>
       <Header>
         <Subheader><h3>Online User Counter</h3>
-        <div>Now on our site <b>online {online_user_counter}</b> visitors</div>
+        <div>Now on our site online <b id="user_counter">{online_user_counter}</b> visitors</div>
         </Subheader>
       </Header>
       <Grid>

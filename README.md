@@ -2,6 +2,8 @@
 <br/>
 <p align="center">
   Count Online Users shows users in real time if the user has been on the site in the last 5 minutes. Built with RoR framework, deployed to Heroku.
+
+  <img src="public/index.png">
 </p>
 
 ## Table of Contents
@@ -15,11 +17,21 @@
 
 ## Introduction
 
-Deployed to Heroku and available [online](https://count-online-users.herokuapp.com/).
+This project only shows the current online user on the home page. It create each user automatically by unique ip address and type of device.
+
+How it works with Action Cable:
+![demo](public/demo.gif)
 
 ## Features
 
-This project only show online user at the main page.
+Main tasks:
+
+* Using any of web application development technologies, create a service that counts users which opened current page of website
+* Display counter on the same page
+* Service should log errors
+* Tests are welcome
+
+Deployed to Heroku and available [online](https://count-online-users.herokuapp.com/). Unfortunately, the Action Cable does not work on heroku yet, so you cannot see the new user in real time, only after update the page.
 
 ## Getting started
 
