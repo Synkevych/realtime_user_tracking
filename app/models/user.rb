@@ -6,6 +6,10 @@ class User < ApplicationRecord
     self.emoji = rand(62) unless self.emoji
     self.visits = 1 unless self.visits
   end
+  
+  validates :name, presence: true, length: { minimum: 3 }
+  validates :ip_address, presence: true
+  validates :device, presence: true
 
   scope :filter_by_online, -> { order('last_seen_at').reverse_order }
   scope :online, -> { where("last_seen_at > ?", Time.now.to_i - DEFAULT_TIME) }
@@ -32,5 +36,5 @@ class User < ApplicationRecord
     self.update(online: false)
     ActionCable.server.broadcast "ActivityChannel", {event: 'unsubscribed', user_name: self.name}
   end
-  self.per_page = 8
+  self.per_page = 16
 end

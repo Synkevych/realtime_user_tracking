@@ -31,21 +31,19 @@ const Home = styled.div`
   grid-gap: 20px;
   width: 100%;
   padding: 20px;
-  grid-auto-rows: auto;
 `
 
 const Users = () => {
   const [users, setUsers] = useState([]);
 
   useEffect(() => {
-    // get all of our users from API
-    // update users in our state 
     axios.get('/api/v1/users.json')
     .then(response => {
       setUsers(response.data.data)
     })
     .catch(response => console.log(response))
   }, [users.length])
+  
   const online_user_counter = users.reduce(
         (acc, a) => {
           if (date_now - a.attributes.last_seen_at < 5*60 ){

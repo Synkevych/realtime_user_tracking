@@ -16,18 +16,20 @@ App.activity = App.cable.subscriptions.create("ActivityChannel", {
 
   received: function(data) {
     
-    let userId = data.user_id;
+    let userName = data.user_name;
     let eventType = data.status;
 
     setTimeout(() => {
       if (eventType == 'online'){
-        document.getElementById(userId).style.borderColor = "#8eff00";
-        document.querySelector(`#${userId} div:last-child`).style.backgroundColor = "#8eff00";
+        document.getElementById(userName).style.borderColor = "#8eff00";
+        document.querySelector(`#${userName} div:last-child`).style.backgroundColor = "#8eff00";
+        document.querySelector(`#${userName} div:last-child a`).innerHTML = "Online";
       } else {
-        document.getElementById(userId).style.borderColor = "#efefef";
-        document.querySelector(`${userId}:last-child`).style.backgroundColor = "#efefef";
+        document.getElementById(userName).style.borderColor = "#efefef";
+        document.querySelector(`${userName}:last-child`).style.backgroundColor = "#efefef";
+        document.querySelector(`#${userName} div:last-child a`).innerHTML = "Offline";
       }
-    }, 800);
+    }, 100);
     
   },
 

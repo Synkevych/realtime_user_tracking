@@ -8,10 +8,10 @@ class ActivityChannel < ApplicationCable::Channel
   end
  
   def appear
-     ActionCable.server.broadcast "activity_channel", user_id: current_user.name, status: 'online'
+     ActionCable.server.broadcast "activity_channel", user_name: current_user.name, status: 'online'
   end
  
   def away
-     ActionCable.server.broadcast "activity_channel", user_id: current_user.name, status: 'offline'
+     ActionCable.server.broadcast "activity_channel", user_name: current_user.name, status: 'offline'
   end
 end

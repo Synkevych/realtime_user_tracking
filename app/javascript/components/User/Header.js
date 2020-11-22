@@ -2,7 +2,9 @@ import React from 'react';
 import styled from 'styled-components';
 import {emojis} from '../Seed';
 
- const Wrapper = styled.div`
+const date_in_seconds = Date.now()/1000;
+
+const Wrapper = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
@@ -17,19 +19,34 @@ import {emojis} from '../Seed';
 `
 
 const Header = (props) => {
-  const {name, ip_address, device, emoji, last_seen_at, visits} = props.attributes;
+  const {name, ip_address, device, emoji, last_seen_at, visits, online} = props.attributes;
+  const time_in_minutes = Math.round((date_in_seconds - last_seen_at)/60);
+  const status = time_in_minutes < 5 ? `Online` : `Last see ${get_time_in_words(time_in_minutes)} ago`;
 
   return (
     <Wrapper>
-      <div>
+      <div id={name}>
         <h2><p>{emojis[emoji]}</p></h2>
         <div className="userName">User Name: {name}</div>
         <div className="totalViews">Visits: {visits}</div>
-        <div className="UserIp">IP-address: {ip_address}</div>
-        <div className="UserDevice">Device: {device}</div>
+        <div className="userIp">IP-address: {ip_address}</div>
+        <div className="userDevice">Device: {device}</div>
+        <div className="isOnline">{status}</div>
       </div>
     </Wrapper>
   )
+}
+
+function get_time_in_words(time){
+  if (time < 60)
+    return time + " min"
+  else if (time < 60 * 24)
+    return Math.round(time / 60) + " h";
+  else if (time < (60 * 24 * 7))
+    return Math.round(time / (60 * 24) ) + " d";
+  else {
+    return "long time";
+  }
 }
 
 export default Header;
