@@ -3,7 +3,7 @@ import axios from 'axios';
 import User from './User';
 import styled from 'styled-components';
 
-const date_in_seconds = Date.now()/1000;
+const date_now =  Math.round( Date.now()/1000);
 
 const Home = styled.div`
   text-line: center;
@@ -31,6 +31,7 @@ const Home = styled.div`
   grid-gap: 20px;
   width: 100%;
   padding: 20px;
+  grid-auto-rows: auto;
 `
 
 const Users = () => {
@@ -45,17 +46,15 @@ const Users = () => {
     })
     .catch(response => console.log(response))
   }, [users.length])
-const date_now =  Math.round( Date.now()/1000);
-const online_user_counter = users.reduce(
-      (acc, a) => {
-        if (date_now - a.attributes.last_seen_at < 5*60 ){
-          return acc +1;
-        } else {
-          return acc;
-        }
-      }, 0 );
-      
-  console.log("counter",online_user_counter);
+  const online_user_counter = users.reduce(
+        (acc, a) => {
+          if (date_now - a.attributes.last_seen_at < 5*60 ){
+            return acc +1;
+          } else {
+            return acc;
+          }
+        }, 0 );
+
   const grid = users.map( item => {
     return (<User key={item.id} attributes={item} />)
   })

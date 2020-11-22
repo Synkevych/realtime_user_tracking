@@ -1,8 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
-import { BrowserRouter as Router, Link} from 'react-router-dom'
+import { BrowserRouter as Router, Link} from 'react-router-dom';
+import {emojis} from '../Seed';
 
-const emojis = ['🐶','🐺','🐱','🐭','🐹','🐰','🐸','🐯','🐨','🐻','🐷','🐽','🐮','🐗','🐵','🐒','🐴','🐑','🐘','🐼','🐧','🐦','🐤','🐥','🐣','🐔','🐍','🐢','🐛','🐝','🐜','🐞','🐌','🐙','🐚','🐠','🐟','🐬','🐳','🐋','🐄','🐏','🐀','🐃','🐅','🐇','🐉','🐎','🐐','🐓','🐕','🐖','🐁','🐂','🐲','🐡','🐊','🐫','🐪','🐆','🐈','🐩'];
 const date_in_seconds = Date.now()/1000;
 
 const Card = styled.div`
@@ -37,11 +37,9 @@ a {
 const User = (props) =>{
   const {name, ip_address, device, emoji, last_seen_at, visits} = props.attributes.attributes;
   const time_in_minutes = Math.round((date_in_seconds - last_seen_at)/60);
-  const time_in_hours = time_in_minutes > 60 ? Math.round(time_in_minutes/60) : null;
-  const time_in_words = time_in_minutes > 60 ? "long time" : `${time_in_minutes} min`
 
-  const status = time_in_minutes < 5 ? `Online` : `Last see ${time_in_words} ago`;
-  const link_border = time_in_minutes < 5 ? '#8eff00' : "#efefef"
+  const status = time_in_minutes < 5 ? `Online` : `Last see ${get_time_in_words(time_in_minutes)} ago`;
+  const link_border = time_in_minutes < 5 ? '#8eff00' : "#efefef";
   return (
     <Card color={link_border}>
       <UserLogo><p>{emojis[emoji]}</p></UserLogo>
@@ -54,6 +52,18 @@ const User = (props) =>{
       </UserStatus>
     </Card>
   )
+}
+
+function get_time_in_words(time){
+  if (time < 60)
+    return time + " min"
+  else if (time < 60 * 24)
+    return Math.round(time / 60) + " h";
+  else if (time < (60 * 24 * 7))
+    return Math.round(time / (60 * 24) ) + " d";
+  else {
+    return "long time";
+  }
 }
 
 export default User;
