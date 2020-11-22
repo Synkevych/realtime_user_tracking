@@ -39,9 +39,9 @@ const User = (props) =>{
   const time_in_minutes = Math.round((date_in_seconds - last_seen_at)/60);
 
   const status = time_in_minutes < 5 ? `Online` : `Last see ${get_time_in_words(time_in_minutes)} ago`;
-  const link_border = time_in_minutes < 5 ? '#8eff00' : "#efefef";
+  const link_border =  "#efefef";
   return (
-    <Card color={link_border}>
+    <Card color={link_border} id={name}>
       <UserLogo><p>{emojis[emoji]}</p></UserLogo>
       <UserTextItem>User: <b>{name}</b></UserTextItem>
       <UserTextItem>Visits: <b>{visits}</b></UserTextItem>

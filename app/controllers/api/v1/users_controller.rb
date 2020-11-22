@@ -41,12 +41,13 @@ module Api
       end
 
       def authenticate!
-        user = User.find_by(ip_address: ip_addr)
-        if user.present?
-          user.update({ visits: user.update_visits, last_seen_at: Time.now.to_i })
+        @current_user = User.find_by(ip_address: ip_addr)
+        if @current_user.present? && @current_user.device == mobile_device
+          @current_user.update({ visits: @current_user.update_visits, last_seen_at: Time.now.to_i })
         else
-          user = User.create(name: user_name, device: mobile_device, ip_address: ip_addr)
+          @current_user = User.create(name: user_name, device: mobile_device, ip_address: ip_addr)
         end
+        session['current_user_id']= @current_user.id
       end
 
       def mobile_device

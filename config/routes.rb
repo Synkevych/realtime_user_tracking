@@ -7,4 +7,6 @@ Rails.application.routes.draw do
     end
   end
   get '*path', to: 'pages#index', via: :all
+
+  mount ActionCable.server => '/cable'
 end
