@@ -31,9 +31,6 @@ module Api
         end
       end
 
-      def destroy
-      end
-
       private
 
       def user_params
@@ -41,13 +38,14 @@ module Api
       end
 
       def authenticate!
-        @current_user = User.find_by(ip_address: ip_addr, device: device_name)
-        if @current_user.present?
-          @current_user.update({ visits: @current_user.update_visits, last_seen_at: Time.now.to_i })
+        current_user = User.find_by(ip_address: ip_addr, device: device_name)
+        
+        if current_user.present?
+          current_user.update({ visits: current_user.update_visits, last_seen_at: Time.now.to_i })
         else
-          @current_user = User.create(name: user_name, device: device_name, ip_address: ip_addr)
+          current_user = User.create(name: user_name, device: device_name, ip_address: ip_addr)
         end
-        session['current_user_id']= @current_user.id
+        session['current_user_id'] = current_user.id
       end
 
       def device_name

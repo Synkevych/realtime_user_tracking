@@ -1,9 +1,7 @@
-import React, {useState, useEffect, Fragment } from 'react';
+import React, {useState, useEffect } from 'react';
 import axios from 'axios';
 import User from './User';
 import styled from 'styled-components';
-
-const date_in_seconds =  Math.round( Date.now()/1000);
 
 const Home = styled.div`
   text-line: center;

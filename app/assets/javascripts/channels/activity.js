@@ -18,16 +18,11 @@ App.activity = App.cable.subscriptions.create("ActivityChannel", {
 
     setTimeout(() => {
       if (eventType == 'online'){
-        this.change_counter(+1)
-        document.getElementById(userName).style.borderColor = "#8eff00";
-        document.querySelector(`#${userName} div:last-child`).style.backgroundColor = "#8eff00";
-        document.querySelector(`#${userName} div:last-child a`).innerHTML = "Online";
-        
+        this.change_counter(+1);
+        this.change_card_style(userName, "#8eff00", "Online")
       } else {
         this.change_counter(-1);
-        document.getElementById(userName).style.borderColor = "#efefef";
-        document.querySelector(`#${userName} div:last-child`).style.backgroundColor = "#efefef";
-        document.querySelector(`#${userName} div:last-child a`).innerHTML = "Offline";
+        this.change_card_style(userName, "#efefef", "Offline")
       }
     }, 1000);
     
@@ -35,7 +30,13 @@ App.activity = App.cable.subscriptions.create("ActivityChannel", {
 
   change_counter(new_score){
     let old_score = Number(document.querySelector(`div #user_counter`).innerHTML);
-      document.querySelector(`div #user_counter`).innerHTML = old_score + new_score;
+    document.querySelector(`div #user_counter`).innerHTML = old_score + new_score;
+  },
+
+  change_card_style(userName, color, status){
+    document.getElementById(userName).style.borderColor = color;
+    document.querySelector(`#${userName} div:last-child`).style.backgroundColor = color;
+    document.querySelector(`#${userName} div:last-child a`).innerHTML = status;
   }
 
 });

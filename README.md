@@ -1,7 +1,7 @@
 <h1 align="center"> Count Online Users </h1> <br>
 <br/>
 <p align="center">
-  Count Online Users shows users in real time if the user has been on the site in the last 5 minutes. Built with RoR framework, deployed to Heroku.
+  Count Online Users - shows users in real time if the user has been on the site in the last 1 minute. Built with RoR and React framework, deployed to Heroku.
 
   <img src="public/index.png">
 </p>
@@ -17,7 +17,7 @@
 
 ## Introduction
 
-This project only shows the current online user on the home page. It create each user automatically by unique ip address and type of device.
+This project only shows the current online user on the home page. It create each user automatically by unique ip address and type of device. To show user online used Rails Action Cable and WebSocket technology. For rendering page used React.
 
 How it works with Action Cable:
 ![demo](public/demo.gif)

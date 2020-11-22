@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { BrowserRouter as Router, Link} from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import {emojis} from '../Seed';
 
 const date_in_seconds = Date.now()/1000;
