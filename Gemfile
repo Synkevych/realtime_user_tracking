@@ -42,6 +42,9 @@ gem 'random_name_generator'
 # Pagination library for Rails, Sinatra, Merb, DataMapper, and more
 gem 'will_paginate', '~> 3.1.0'
 
+# Redis for ActionCable and WebSocket 
+gem 'redis', '~> 3.3', '>= 3.3.1'
+
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
