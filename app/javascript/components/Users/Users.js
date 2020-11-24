@@ -59,7 +59,7 @@ const Users = () => {
     <Home>
       <Header>
         <Subheader><h3>Online User Counter</h3>
-        <div>Now on our site online <b id="user_counter">{online_user_counter}</b> visitors</div>
+        <div>Now on our site online <b id="user_counter">{0}</b> visitors</div>
         </Subheader>
       </Header>
       <Grid>

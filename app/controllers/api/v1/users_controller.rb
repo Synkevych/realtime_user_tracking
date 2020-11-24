@@ -45,7 +45,7 @@ module Api
         else
           current_user = User.create(name: user_name, device: device_name, ip_address: ip_addr)
         end
-        session['current_user_id'] = current_user.id
+        session['user_id'] = current_user.id
       end
 
       def device_name
