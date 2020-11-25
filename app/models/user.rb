@@ -29,12 +29,10 @@ class User < ApplicationRecord
   end
 
   def appear
-    self.update(online: true)
     ActionCable.server.broadcast "ActivityChannel", {event: 'connected', user_name: self.name}
   end
 
   def away
-    self.update(online: false)
     ActionCable.server.broadcast "ActivityChannel", {event: 'unsubscribed', user_name: self.name}
   end
   self.per_page = 16
