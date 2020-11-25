@@ -4,10 +4,6 @@ App.activity = App.cable.subscriptions.create("ActivityChannel", {
     this.perform("appear");
   },
   
-  disconnected: function() {
-    this.perform("unsubscribed");
-  },
-
   unsubscribed: function() {
     this.perform("unsubscribed");
   },
