@@ -4,6 +4,10 @@ App.activity = App.cable.subscriptions.create("ActivityChannel", {
     this.perform("appear");
   },
   
+  disconnected: function() {
+    this.perform("unsubscribed");
+  },
+
   unsubscribed: function() {
     this.perform("unsubscribed");
   },
@@ -15,8 +19,6 @@ App.activity = App.cable.subscriptions.create("ActivityChannel", {
     
     let eventType = data.status;
     let onlineUsers = data.users;
-    console.log("all users",onlineUsers);
-    
     setTimeout(() => {
       onlineUsers.forEach(user => {
       if (user.online && eventType == 'online'){
