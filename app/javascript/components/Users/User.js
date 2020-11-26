@@ -38,7 +38,7 @@ const User = (props) =>{
   const {name, ip_address, device, emoji, last_seen_at, visits, online} = props.attributes.attributes;
   const time_in_minutes = Math.round((date_in_seconds - last_seen_at)/60);
 
-  const status = online || time_in_minutes < 1 ? `Online` : `Last see ${get_time_in_words(time_in_minutes)} ago`;
+  const status = online ? `Online` : `Last see ${get_time_in_words(time_in_minutes, last_seen_at)} ago`;
   const link_border =  online ? "#8eff00" : "#efefef";
   return (
     <Card color={link_border} id={name}>
@@ -54,8 +54,10 @@ const User = (props) =>{
   )
 }
 
-function get_time_in_words(time){
-  if (time < 60)
+function get_time_in_words(time, last_seen_at){
+  if (time == 0)
+    return  Math.round(date_in_seconds - last_seen_at) + " sec";
+  else if (time < 60)
     return time + " min"
   else if (time < 60 * 24)
     return Math.round(time / 60) + " h";

@@ -1,15 +1,18 @@
 class ActivityChannel < ApplicationCable::Channel
+
   def subscribed
     stream_from "activity_channel"
   end
  
   def unsubscribed
     current_user.away
-    ActionCable.server.broadcast "activity_channel", user_name: current_user.name, status: 'offline'
+    current_user.update(online: false)
+    ActionCable.server.broadcast "activity_channel", status: 'offline', users: User.all.offline
   end
- 
+  
   def appear
     current_user.appear
-     ActionCable.server.broadcast "activity_channel", user_name: current_user.name, status: 'online'
+    current_user.update(online: true)
+    ActionCable.server.broadcast "activity_channel", status: 'online', users: User.all.online
   end
 end

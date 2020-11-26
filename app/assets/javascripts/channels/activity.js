@@ -1,11 +1,11 @@
 App.activity = App.cable.subscriptions.create("ActivityChannel", {
 
   connected: function() {
-    this.perform("appear")
+    this.perform("appear");
   },
-
-  disconnected: function() {
-    document.location.reload();
+  
+  unsubscribed: function() {
+    this.perform("unsubscribed");
   },
 
   appear: function(){
@@ -13,24 +13,27 @@ App.activity = App.cable.subscriptions.create("ActivityChannel", {
 
   received: function(data) {
     
-    let userName = data.user_name;
     let eventType = data.status;
-
+    let onlineUsers = data.users;
     setTimeout(() => {
-      if (eventType == 'online'){
-        this.change_counter(+1);
-        this.change_card_style(userName, "#8eff00", "Online")
-      } else {
-        this.change_counter(-1);
-        this.change_card_style(userName, "#efefef", "Offline")
-      }
+      onlineUsers.forEach(user => {
+      if (user.online && eventType == 'online'){
+        this.change_counter(onlineUsers.length, true);
+        this.change_card_style(user.name, "#8eff00", "Online")
+        }
+      else if (document.querySelector(`#${user.name} div:last-child a`).text == 'Online') {
+        this.change_counter(onlineUsers.length, false);
+        this.change_card_style(user.name, "#efefef", "Offline")
+        }
+      });
     }, 1000);
     
   },
 
-  change_counter(new_score){
-    let old_score = Number(document.querySelector(`div #user_counter`).innerHTML);
-    document.querySelector(`div #user_counter`).innerHTML = old_score + new_score;
+  change_counter(score, userAdded){
+    const oldScore = Number(document.querySelector(`div #user_counter`).innerHTML);
+    const newScore = userAdded ? score : oldScore - 1;
+    document.querySelector(`div #user_counter`).innerHTML = newScore;
   },
 
   change_card_style(userName, color, status){

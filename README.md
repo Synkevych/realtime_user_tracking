@@ -1,7 +1,7 @@
 <h1 align="center"> Count Online Users </h1> <br>
 <br/>
 <p align="center">
-  Count Online Users - tracks whether a user is online or not(has opened webpage in browser), showing a green button "Online" at the user card and changes the users counter at the subheader. Built with RoR and React framework, deployed to Heroku.
+  Count Online Users - tracks whether a user is online or not(has opened webpage in browser), showing a green button "Online" at the user card and changes the users counter at the subheader. Grey button with status "Online" if the user has been on site less than a minute ago. Built with RoR and React framework, deployed to Heroku.
 
   <img src="public/index.png">
 </p>

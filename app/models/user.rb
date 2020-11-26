@@ -12,7 +12,8 @@ class User < ApplicationRecord
   validates :device, presence: true
 
   scope :filter_by_online, -> { order('last_seen_at').reverse_order }
-  scope :online, -> { where("last_seen_at > ?", Time.now.to_i - DEFAULT_TIME) }
+  scope :online, -> { where(online: true) }
+  scope :offline, -> { where(online: false) }
   
   def update_visits
     user_online? ? self.visits = self.visits + 1 : self.visits
@@ -28,12 +29,10 @@ class User < ApplicationRecord
   end
 
   def appear
-    self.update(online: true)
     ActionCable.server.broadcast "ActivityChannel", {event: 'connected', user_name: self.name}
   end
 
   def away
-    self.update(online: false)
     ActionCable.server.broadcast "ActivityChannel", {event: 'unsubscribed', user_name: self.name}
   end
   self.per_page = 16
