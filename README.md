@@ -59,7 +59,7 @@ By default this repo create database `count_online_users_development` but you ca
 cp config/database.yml.sample config/database.yml
 ```
 
-##### 3. Create and setup the database
+##### 3. Create and setup the database, bundle and yarn
 
 Run the following commands to create and setup the database.
 
@@ -68,6 +68,10 @@ rails db:create
 rails db:setup
 rails db:migrate
 rails db:seed # create 3 default user on database
+
+bundle install
+
+yarn install
 ```
 
 ##### 4. Start the Rails server
