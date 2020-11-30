@@ -4,11 +4,17 @@ App.activity = App.cable.subscriptions.create("ActivityChannel", {
     this.perform("appear");
   },
   
-  unsubscribed: function() {
+  unsubscribed: function(user) {
+    console.log("current user", user);
+    this.showError(user);
     this.perform("unsubscribed");
   },
 
   appear: function(){
+  },
+
+  showError: function(user){
+    console.log("current user", user);
   },
 
   received: function(data) {
@@ -18,6 +24,10 @@ App.activity = App.cable.subscriptions.create("ActivityChannel", {
     setTimeout(() => {
       onlineUsers.forEach(user => {
       if (user.online && eventType == 'online'){
+        // if user is new and not present on the page
+        if (document.getElementById(user.name) == null){
+          location.reload()
+        }
         this.change_counter(onlineUsers.length, true);
         this.change_card_style(user.name, "#8eff00", "Online")
         }

@@ -62,7 +62,7 @@ const Users = () => {
         <div>Now on our site online <b id="user_counter">{online_user_counter}</b> visitors</div>
         </Subheader>
       </Header>
-      <Grid>
+      <Grid className="cards-grid">
         {grid}
       </Grid>
     </Home>

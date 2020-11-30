@@ -32,7 +32,7 @@ Main tasks:
 * Service should log errors
 * Tests are welcome
 
-Deployed to Heroku and available [online](https://count-online-users.herokuapp.com/). Unfortunately, the Action Cable does not work on heroku yet, so you cannot see the new user in real time, only after force update the page.
+Deployed to Heroku and available [online](https://count-online-users.herokuapp.com/). Unfortunately, the Action Cable does not work on Heroku yet(I'm not setup Redis), so you cannot see the new user in real time, only after update the page.
 
 ## Getting started
 
