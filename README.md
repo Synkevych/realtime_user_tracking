@@ -18,21 +18,24 @@
 ## Introduction
 
 This project only shows the current online user on the home page. This is useful for creating presence features like showing a green dot next to a user name if they're online.
-To do that, it create each user automatically by unique ip address and type of device. To tracks users used **Rails Action Cable** and **WebSocket** technology. For fronted - used **React**.
+To do that, it create each user automatically by unique ip address and type of device. To tracks users used **Rails Action Cable** with **Redis** and **WebSocket** technology. For fronted - used **React**.
 
-How it works with Action Cable:
+How it works with Action Cable(works strangely because of cookies):
 ![demo](public/demo.gif)
+
+The user ID is stored in cookies, so if you just change the device type in the browser, the change does not occur, you also need to clear the cookies. Better for testing to open one tab in incognito mode.
 
 ## Features
 
 Main tasks:
 
-* Using any of web application development technologies, create a service that counts users which opened current page of website
-* Display counter on the same page
-* Service should log errors
-* Tests are welcome
+* Create a service that counts users which opened current page of website
+* Display counter for all users on the same page
+* The user should be created/find automatically according to the request parameters(ip,devise)
+* REST API
+* React for rendering Frontend part
 
-Deployed to Heroku and available [online](https://count-online-users.herokuapp.com/). Unfortunately, the Action Cable does not work on Heroku yet(I'm not setup Redis), so you cannot see the new user in real time, only after update the page.
+Deployed to Heroku and available [online](https://count-online-users.herokuapp.com/). It used **redistogo** Heroku addons to automatic setup and run Redis server.
 
 ## Getting started
 
@@ -48,20 +51,17 @@ The setups steps expect following tools installed on the system.
 ##### 1. Check out the repository
 
 ```bash
-git clone https://github.com/Synkevych/ProjID-HR014.git
+git clone https://github.com/Synkevych/realtime_user_tracking
+cd realtime_user_tracking
 ```
 
 ##### 2. Create database.yml file
 
-By default this repo create database `count_online_users_development` but you can also copy the sample database.yml file and edit the database configuration as required.
-
-```bash
-cp config/database.yml.sample config/database.yml
-```
+By default this repo create database `count_online_users_development`, edit the database configuration as required and provide correct username and password from your PostgreSQL.
 
 ##### 3. Create and setup the database, bundle and yarn
 
-Run the following commands to create and setup the database.
+Run the following commands to create and setup the database and all required libraries.
 
 ```ruby
 rails db:create
@@ -76,35 +76,54 @@ yarn install
 
 ##### 4. Start the Rails server
 
-You can start the rails server using the command given below.
-
-```ruby
-bundle install
-rails s
-```
+You can start the rails server using the command: `rails s`.
 
 And now you can visit the site with the URL http://localhost:3000
 
 ##### 5. Deployment to Heroku instructions
 
+Here is instruction how to deploy this app to Heroku:
+
 `heroku login` - login to your profile  
 `heroku create count-online-users` - create new heroku app with specific name  
+`heroku addons:add redistogo` - this addons create redis server
+`heroku config --app count-online-users | grep REDISTOGO_URL` - this command show you unique url to your redis server on heroku, copy them and past on `config/cable.yml`
+
+```yml
+production:
+  adapter: redis
+  url: redis://redistogo:36185658a31da3b45b9485ad5087016a@soat.redistogo.com:10775/
+```
+
+Then add configuration to the config/environments/production.rb
+
+```ruby
+Rails.application.configure do
+...
+  # Configuration for Action Cable and WebSockets
+  config..web_socket_server_url = "wss://count-online-users.herokuapp.com/cable"
+
+  # Allowed Request Origin 
+  config.action_cable.allowed_request_origins = ['https://count-online-users.herokuapp.com', 'http://count-online-users.herokuapp.com']
+end
+```
+
+`git add -A; git commit -m "update redis conf"` - commit changes
 `git push heroku master` - push you project to Heroku server  
 `heroku run rake db:migrate` - run migration on Heroku server  
 `heroku pg:reset` - drop database on Heroku server  
 `heroku open` - open and test your website  
 
-##### 6. Other useful command
+##### 6. Other useful commands
 
 `rails new count_online_users --webpack=react --database=postgresql -T` - create a new app with React and PostgreSQL  
-`rails g model User name ip_address device`  
-`rails db:setup db:create db:migrate`  
+`rails g model User name:string ip_address:string device:string visits:integer online:boolean`  
+`rails db:setup`  
 `rails g serializer User name ip_address device, emoji, last_seen_at, visits, online`  
 `rails g channel Activity`  
 `yarn add react-router-dom`  
 `yarn add axios`  
 `yarn add styled-components`  
-`git add -A && git commit -m "fix: message"`  
 ``
 
 ## Feedback
