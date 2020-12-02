@@ -5,23 +5,18 @@ App.activity = App.cable.subscriptions.create("ActivityChannel", {
   },
   
   unsubscribed: function(user) {
-    console.log("current user", user);
-    this.showError(user);
     this.perform("unsubscribed");
   },
 
   appear: function(){
   },
 
-  showError: function(user){
-    console.log("current user", user);
-  },
-
   received: function(data) {
     
     let eventType = data.status;
     let onlineUsers = data.users;
-    setTimeout(() => {
+    // We need a timeout due to waiting for a full page load
+    setTimeout(() => {  
       onlineUsers.forEach(user => {
       if (user.online && eventType == 'online'){
         // if user is new and not present on the page

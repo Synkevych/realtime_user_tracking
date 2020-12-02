@@ -11,14 +11,16 @@ class User < ApplicationRecord
   validates :ip_address, presence: true
   validates :device, presence: true
 
-  scope :filter_by_online, -> { order('last_seen_at').reverse_order }
+  scope :filter_by_last_seen, -> { order('last_seen_at').reverse_order }
   scope :online, -> { where(online: true) }
   scope :offline, -> { where(online: false) }
   
-  def update_visits
+  def refresh_activity
     user_online? ? self.visits = self.visits + 1 : self.visits
+    self.last_seen_at = Time.now.to_i
   end
 
+  # if the user was on the page more than five minutes ago update visits
   def user_online?
     last_visit = self.last_seen_at + DEFAULT_TIME
     if Time.now.to_i >= last_visit
@@ -30,12 +32,14 @@ class User < ApplicationRecord
 
   def appear
     self.update(online: true)
-    ActionCable.server.broadcast "activity_channel", status: 'online', users: User.all.online
+    users_param = User.all.online.reduce([]) { |s, u| s.push(name: u.name, online: u.online) }
+    ActionCable.server.broadcast "activity_channel", status: 'online', users: users_param
   end
-
+  
   def away
-    self.update(online: false)
-    ActionCable.server.broadcast "activity_channel", status: 'offline', users: User.all.offline
+    self.update(online: false, last_seen_at: Time.now.to_i)
+    users_param = User.all.offline.reduce([]) { |s, u| s.push(name: u.name, online: u.online) }
+    ActionCable.server.broadcast "activity_channel", status: 'offline', users: users_param
   end
 
   self.per_page = 16

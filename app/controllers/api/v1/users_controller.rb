@@ -6,10 +6,9 @@ module Api
       protect_from_forgery with: :null_session
       before_action :authenticate!
 
-      #.online
       def index
         users = User.all
-        .filter_by_online
+        .filter_by_last_seen
         .paginate(page: params[:page])
 
         render json: UserSerializer.new(users).serialized_json
@@ -41,7 +40,7 @@ module Api
         current_user = User.find_by(ip_address: ip_addr, device: device_name)
         
         if current_user.present?
-          current_user.update({ visits: current_user.update_visits, last_seen_at: Time.now.to_i })
+          current_user.refresh_activity
         else
           current_user = User.create(name: user_name, device: device_name, ip_address: ip_addr)
         end
@@ -56,7 +55,7 @@ module Api
       end
 
       def ip_addr
-        ip_addr = request.remote_ip == "::1" ? "192.168.0.1" : request.remote_ip.to_s
+        request.remote_ip == "::1" ? "192.168.0.1" : request.remote_ip.to_s
       end
 
       def user_name

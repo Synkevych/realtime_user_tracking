@@ -4,6 +4,14 @@ import {emojis} from '../Seed';
 
 const date_in_seconds = Date.now()/1000;
 
+const Card = styled.div`
+  border: 0.8em solid #bdbdbd;
+  background: #fff;
+  text-align: center;
+  border-radius: 50px;
+  padding: 1em;
+`
+
 const Wrapper = styled.div`
   display: flex;
   align-items: center;
@@ -16,6 +24,12 @@ const Wrapper = styled.div`
       text-align: center;
     }
   }
+  div{
+    margin-bottom: 0.4em;
+  }
+  a{
+    color: #8eff00;
+  }
 `
 
 const Header = (props) => {
@@ -25,14 +39,14 @@ const Header = (props) => {
 
   return (
     <Wrapper>
-      <div id={name}>
+      <Card id={name}>
         <h2><p>{emojis[emoji]}</p></h2>
         <div className="userName">User Name: {name}</div>
         <div className="totalViews">Visits: {visits}</div>
         <div className="userIp">IP-address: {ip_address}</div>
         <div className="userDevice">Device: {device}</div>
-        <div className="isOnline">{status}</div>
-      </div>
+        <div className="isOnline"><a>{status}</a></div>
+      </Card>
     </Wrapper>
   )
 }
