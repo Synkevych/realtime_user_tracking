@@ -1,7 +1,7 @@
 <h1 align="center"> Count Online Users </h1> <br>
 <br/>
 <p align="center">
-  Count Online Users - tracks whether a user is online or not(has opened webpage in browser), showing a green button "Online" at the user card and changes the users counter at the subheader. Grey button with status "Online" if the user has been on site less than a minute ago. Built with RoR and React framework, deployed to Heroku.
+  Count Online Users - tracks whether a user is online or not(has opened webpage in browser), showing a green button "Online" at the user card and changes the users counter at the subheader. Built with RoR and React framework, deployed to Heroku.
 
   <img src="public/index.png">
 </p>
@@ -17,7 +17,7 @@
 
 ## Introduction
 
-This project only shows the current online user on the home page. This is useful for creating presence features like showing a green dot next to a user name if they're online.
+This project only shows the current online user on the home page. This is useful for creating presence features like showing a green dot next to a user name if they're online. Based on RailsGuide - ActionCable Example 1: [User Appearances](https://guides.rubyonrails.org/action_cable_overview.html#example-1-user-appearances)
 To do that, it create each user automatically by unique ip address and type of device. To tracks users used **Rails Action Cable** with **Redis** and **WebSocket** technology. For fronted - used **React**.
 
 How it works with Action Cable(works strangely because of cookies):
