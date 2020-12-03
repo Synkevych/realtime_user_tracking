@@ -43,7 +43,7 @@ const Header = (props) => {
         <h2><p>{emojis[emoji]}</p></h2>
         <div className="userName">User Name: {name}</div>
         <div className="totalViews">Visits: {visits}</div>
-        <div className="userIp">IP-address: {ip_address}</div>
+        <div className="userIp">IP-address: {change_ip(ip_address)}</div>
         <div className="userDevice">Device: {device}</div>
         <div className="isOnline"><a>{status}</a></div>
       </Card>
@@ -61,6 +61,12 @@ function get_time_in_words(time){
   else {
     return "long time";
   }
+}
+
+function change_ip(ip){
+  return ip.split(".")
+           .map((e,i) => i<1 ? e : "***")
+           .join(".")
 }
 
 export default Header;
