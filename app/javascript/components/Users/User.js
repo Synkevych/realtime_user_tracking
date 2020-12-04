@@ -53,8 +53,9 @@ const User = (props) =>{
 
   const status = online ? `Online` : `Last see ${get_time_in_words(time_in_minutes, last_seen_at)} ago`;
   const link_border =  online ? "#8eff00" : "#efefef";
+  const card_class =  online ? 'active' : '';
   return (
-    <Card color={link_border} id={name}>
+    <Card color={link_border} id={name} className={card_class}>
       <UserLogo><p>{emojis[emoji]}</p></UserLogo>
       <UserTextItem>User: <b>{name}</b></UserTextItem>
       <UserTextItem>Visits: <b>{visits}</b></UserTextItem>

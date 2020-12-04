@@ -32,13 +32,13 @@ class User < ApplicationRecord
 
   def appear
     self.update(online: true)
-    users_param = User.all.online.reduce([]) { |s, u| s.push(name: u.name) }
+    users_param =[{ name: self.name }]
     ActionCable.server.broadcast "activity_channel", status: 'online', users: users_param
   end
   
   def away
     self.update(online: false, last_seen_at: Time.now.to_i)
-    users_param = User.all.offline.reduce([]) { |s, u| s.push(name: u.name, away: u.last_seen_at) }
+    users_param = [{ name: self.name, away: self.last_seen_at }]
     ActionCable.server.broadcast "activity_channel", status: 'offline', users: users_param
   end
 

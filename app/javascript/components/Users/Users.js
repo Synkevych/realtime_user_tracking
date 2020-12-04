@@ -17,10 +17,10 @@ const Home = styled.div`
   width: 100%;
   padding: 20px;
 
-  @media (max-width: 520px) {
+  @media (max-device-width: 520px)   {
     grid-template-columns: auto;
   };
-  @media (min-width: 520px) {
+  @media (min-device-width: 520px) {
     grid-template-columns: repeat(2, 1fr);
   };
   @media (min-width: 820px) {

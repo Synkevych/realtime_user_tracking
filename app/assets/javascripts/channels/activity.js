@@ -4,11 +4,8 @@ App.activity = App.cable.subscriptions.create("ActivityChannel", {
     this.perform("appear");
   },
   
-  unsubscribed: function(user) {
+  unsubscribed: function() {
     this.perform("unsubscribed");
-  },
-
-  appear: function(){
   },
 
   received: function(data) {
@@ -18,27 +15,28 @@ App.activity = App.cable.subscriptions.create("ActivityChannel", {
     // We need a timeout due to waiting for a full page load
     setTimeout(() => {  
       onlineUsers.forEach(user => {
+        console.log("user:", user.name, "has status: ", eventType, "all data: ", data);
       if (eventType == 'online'){
         // if user is new and not present on the page
         if (document.getElementById(user.name) == null){
           location.reload()
         }
-        this.change_counter(onlineUsers.length, true);
         this.change_card_style(user.name, "#8eff00", "Online")
-        }
+        document.getElementById(user.name).classList.add('active');
+      }
       else if (document.querySelector(`#${user.name} div:last-child a`).text == 'Online') {
         let time_in_words = this.get_time_in_words(Math.round((Date.now()/1000 - user.away)/60), user.away);
-        this.change_counter(onlineUsers.length, false);
         this.change_card_style(user.name, "#efefef", `Last see ${time_in_words} ago` )
-        }
+        document.getElementById(user.name).classList.remove('active');
+      }
+      this.change_counter();
       });
     }, 1000);
     
   },
 
-  change_counter(score, userAdded){
-    const oldScore = Number(document.querySelector(`div #user_counter`).innerHTML);
-    const newScore = userAdded ? score : oldScore - 1;
+  change_counter(){
+    const newScore = document.getElementsByClassName('active').length;
     document.querySelector(`div #user_counter`).innerHTML = newScore;
   },
 
