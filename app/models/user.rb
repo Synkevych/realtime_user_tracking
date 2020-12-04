@@ -16,18 +16,7 @@ class User < ApplicationRecord
   scope :offline, -> { where(online: false) }
   
   def refresh_activity
-    user_online? ? self.visits = self.visits + 1 : self.visits
-    self.last_seen_at = Time.now.to_i
-  end
-
-  # if the user was on the page more than five minutes ago update visits
-  def user_online?
-    last_visit = self.last_seen_at + DEFAULT_TIME
-    if Time.now.to_i >= last_visit
-     true
-    else
-     false
-    end
+    self.update(visits: self.visits+1, last_seen_at: Time.now.to_i)
   end
 
   def appear
