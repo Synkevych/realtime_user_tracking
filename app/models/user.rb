@@ -27,7 +27,7 @@ class User < ApplicationRecord
   
   def away
     self.update(online: false, last_seen_at: Time.now.to_i)
-    users_param = User.all.offline.reduce([]) { |s, u| s.push(name: u.name, online: u.online) }
+    users_param = User.all.offline.reduce([]) { |s, u| s.push(name: u.name, online: u.online, away: u.last_seen_at) }
     ActionCable.server.broadcast "activity_channel", status: 'offline', users: users_param
   end
 

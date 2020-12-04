@@ -27,8 +27,9 @@ App.activity = App.cable.subscriptions.create("ActivityChannel", {
         this.change_card_style(user.name, "#8eff00", "Online")
         }
       else if (document.querySelector(`#${user.name} div:last-child a`).text == 'Online') {
+        let time_in_words = this.get_time_in_words(Math.round((Date.now()/1000 - user.away)/60), user.away);
         this.change_counter(onlineUsers.length, false);
-        this.change_card_style(user.name, "#efefef", "Offline")
+        this.change_card_style(user.name, "#efefef", `Last see ${time_in_words} ago` )
         }
       });
     }, 1000);
@@ -45,6 +46,20 @@ App.activity = App.cable.subscriptions.create("ActivityChannel", {
     document.getElementById(userName).style.borderColor = color;
     document.querySelector(`#${userName} div:last-child`).style.backgroundColor = color;
     document.querySelector(`#${userName} div:last-child a`).innerHTML = status;
+  },
+
+  get_time_in_words(time, last_seen_at){
+    if (time == 0)
+      return  Math.round(Date.now()/1000 - last_seen_at) + " sec";
+    else if (time < 60)
+      return time + " min"
+    else if (time < 60 * 24)
+      return Math.round(time / 60) + " h";
+    else if (time < (60 * 24 * 7))
+      return Math.round(time / (60 * 24) ) + " d";
+    else {
+      return "long time";
+    }
   }
 
 });
