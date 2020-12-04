@@ -19,6 +19,16 @@ border-radius: 100%;
 border: 1px solid #efefef;
 margin: 0.4em 2.7em;
 background: radial-gradient(#ffffff, #d6d6d6);
+
+@media (max-device-width: 320px)  {
+    margin: 0.5em 12em;
+  };
+@media (max-device-width: 800px) {
+    margin: 0.4em 5.5em;
+  };
+@media (min-device-width: 1280px)  {
+    margin: 0.4em 2.7em;
+  };
 `
 const UserTextItem = styled.div`
 padding: 0.5em 0;

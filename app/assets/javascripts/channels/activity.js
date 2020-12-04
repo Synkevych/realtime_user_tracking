@@ -18,7 +18,7 @@ App.activity = App.cable.subscriptions.create("ActivityChannel", {
     // We need a timeout due to waiting for a full page load
     setTimeout(() => {  
       onlineUsers.forEach(user => {
-      if (user.online && eventType == 'online'){
+      if (eventType == 'online'){
         // if user is new and not present on the page
         if (document.getElementById(user.name) == null){
           location.reload()
