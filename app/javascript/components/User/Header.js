@@ -5,7 +5,7 @@ import {emojis} from '../Seed';
 const date_in_seconds = Date.now()/1000;
 
 const Card = styled.div`
-  border: 0.8em solid #bdbdbd;
+  border: 0.8em solid ${props => props.color};
   background: #fff;
   text-align: center;
   border-radius: 50px;
@@ -26,26 +26,28 @@ const Wrapper = styled.div`
   }
   div{
     margin-bottom: 0.4em;
-  }
-  a{
-    color: #8eff00;
+    a:link{
+      color: ${props => props.color};
+      font-weight: 800;
+    }
   }
 `
 
 const Header = (props) => {
   const {name, ip_address, device, emoji, last_seen_at, visits, online} = props.attributes;
   const time_in_minutes = Math.round((date_in_seconds - last_seen_at)/60);
-  const status = time_in_minutes < 5 ? `Online` : `Last see ${get_time_in_words(time_in_minutes)} ago`;
+  const status = time_in_minutes < 5 ? `Online` : `Last see: ${get_time_in_words(time_in_minutes)} ago`;
+  const status_color =  online ? "#8eff00" : "#9c9c9c";
 
   return (
     <Wrapper>
-      <Card id={name}>
+      <Card id={name} color={status_color}>
         <h2><p>{emojis[emoji]}</p></h2>
         <div className="userName">User Name: {name}</div>
         <div className="totalViews">Visits: {visits}</div>
         <div className="userIp">IP-address: {change_ip(ip_address)}</div>
         <div className="userDevice">Device: {device}</div>
-        <div className="isOnline"><a>{status}</a></div>
+        <div className="isOnline" color={status_color}><a >{status}</a></div>
       </Card>
     </Wrapper>
   )
@@ -65,7 +67,7 @@ function get_time_in_words(time){
 
 function change_ip(ip){
   return ip.split(".")
-           .map((e,i) => i<1 ? e : "***")
+           .map((e,i) => i<3 ? e : e.replace(/[0-9]/g,"*"))
            .join(".")
 }
 

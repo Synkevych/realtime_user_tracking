@@ -2,26 +2,13 @@ import React, {useState, useEffect } from 'react';
 import axios from 'axios';
 import User from './User';
 import styled from 'styled-components';
+import Counter from '../../containers/Counter';
 
 const Home = styled.div`
   text-line: center;
   max-width: 1200px;
   margin-left: auto;
   margin-right: auto;
-  `
-
-  const Header = styled.div`
-  padding: 1em 2em 0.1em 1em;
-  h1 {
-    font-size: 42px;
-  }
-  `
-  const Subheader = styled.div`
-  text-align: center;
-  h3{
-    font-weight: 300;
-    font-size: 26px;
-  }
   `
   const Grid = styled.div`
   display: grid;
@@ -57,11 +44,7 @@ const Users = () => {
 
   return (
     <Home>
-      <Header>
-        <Subheader><h3>Online User Counter</h3>
-        <div>Now on our site online <b id="user_counter">{online_user_counter}</b> visitors</div>
-        </Subheader>
-      </Header>
+      <Counter attributes={online_user_counter}/>
       <Grid className="cards-grid">
         {grid}
       </Grid>

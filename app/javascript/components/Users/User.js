@@ -73,7 +73,7 @@ function get_time_in_words(time, last_seen_at){
 
 function change_ip(string){
   return string.split(".")
-           .map((e,i) => i<3 ? e : "*")
+           .map((e,i) => i<3 ? e : e.replace(/[0-9]/g,"*"))
            .join(".")
 }
 
