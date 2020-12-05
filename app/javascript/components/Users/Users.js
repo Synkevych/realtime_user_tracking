@@ -9,26 +9,25 @@ const Home = styled.div`
   margin-left: auto;
   margin-right: auto;
   `
-
-  const Header = styled.div`
-  padding: 1em 2em 0.1em 1em;
-  h1 {
-    font-size: 42px;
-  }
-  `
-  const Subheader = styled.div`
-  text-align: center;
-  h3{
-    font-weight: 300;
-    font-size: 26px;
-  }
-  `
   const Grid = styled.div`
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   grid-gap: 20px;
   width: 100%;
   padding: 20px;
+
+  @media (max-width: 520px)   {
+    grid-template-columns: auto;
+  };
+  @media (min-width: 520px) {
+    grid-template-columns: repeat(2, 1fr);
+  };
+  @media (min-width: 920px) {
+    grid-template-columns: repeat(3, 1fr);
+  };
+  @media (min-width: 1280px) {
+    grid-template-columns: repeat(4, 1fr);
+  };
 `
 
 const Users = () => {
@@ -57,11 +56,6 @@ const Users = () => {
 
   return (
     <Home>
-      <Header>
-        <Subheader><h3>Online User Counter</h3>
-        <div>Now on our site online <b id="user_counter">{online_user_counter}</b> visitors</div>
-        </Subheader>
-      </Header>
       <Grid className="cards-grid">
         {grid}
       </Grid>

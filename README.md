@@ -124,7 +124,8 @@ end
 `yarn add react-router-dom`  
 `yarn add axios`  
 `yarn add styled-components`  
-``
+`git checkout redis_for_heroku -- config/cable.yml ` - get changes from specific files from another branch
+`git merge --squash fix_updating_when_user_returned` - squash all changes from a branch to the master
 
 ## Feedback
 

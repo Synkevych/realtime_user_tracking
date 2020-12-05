@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
+import Counter from './Counter';
 
 const Header = styled.nav`
 	text-align: center;
@@ -18,11 +19,14 @@ const Header = styled.nav`
 `
 
 const NavBar = () => (
-  <Header>
-    <Link to='/' className='navbar-brand'>
-      <h3 className='navbar-brand logo-text'>Home</h3>
-    </Link>
-  </Header>
+  <header>
+    <Header>
+      <Link to='/' className='navbar-brand'>
+        <h3 className='navbar-brand logo-text'>Home</h3>
+      </Link>
+    </Header>
+    <Counter attributes={0}/>
+  </header>
 );
 
 export default NavBar;

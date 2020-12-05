@@ -12,14 +12,15 @@ class User < ApplicationRecord
   validates :device, presence: true
 
   scope :filter_by_last_seen, -> { order('last_seen_at').reverse_order }
-  scope :online, -> { where(online: true) }
-  scope :offline, -> { where(online: false) }
+  # scope :online, -> { where(online: true) }
+  # scope :offline, -> { where(online: false) }
   
+  # after user makes any request, update visits and last visit date
   def refresh_activity
-    user_online? ? self.visits = self.visits + 1 : self.visits
-    self.last_seen_at = Time.now.to_i
+    visits = user_online? ? self.visits + 1 :  self.visits
+    self.update(visits: visits, last_seen_at: Time.now.to_i)
   end
-
+  
   # if the user was on the page more than five minutes ago update visits
   def user_online?
     last_visit = self.last_seen_at + DEFAULT_TIME
@@ -30,16 +31,18 @@ class User < ApplicationRecord
     end
   end
 
+  # if a user appears on the site, we send information about him to all online users 
   def appear
     self.update(online: true)
-    users_param = User.all.online.reduce([]) { |s, u| s.push(name: u.name, online: u.online) }
-    ActionCable.server.broadcast "activity_channel", status: 'online', users: users_param
+    ActionCable.server.broadcast "activity_channel", status: 'online', user_name: self.name 
   end
   
+  # if the user closes the site tab, we send the data of this user to all those who are online
   def away
     self.update(online: false, last_seen_at: Time.now.to_i)
-    users_param = User.all.offline.reduce([]) { |s, u| s.push(name: u.name, online: u.online) }
-    ActionCable.server.broadcast "activity_channel", status: 'offline', users: users_param
+    ActionCable.server.broadcast "activity_channel", status: 'offline',
+                                                     user_name: self.name,
+                                                     user_away_at: self.last_seen_at
   end
 
   self.per_page = 16

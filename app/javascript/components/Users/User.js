@@ -19,6 +19,16 @@ border-radius: 100%;
 border: 1px solid #efefef;
 margin: 0.4em 2.7em;
 background: radial-gradient(#ffffff, #d6d6d6);
+
+@media (max-width: 320px)  {
+    margin: 0.5em 12em;
+  };
+@media (max-width: 800px) {
+    margin: 0.4em 5.5em;
+  };
+@media (min-width: 1280px)  {
+    margin: 0.4em 2.7em;
+  };
 `
 const UserTextItem = styled.div`
 padding: 0.5em 0;
@@ -43,8 +53,9 @@ const User = (props) =>{
 
   const status = online ? `Online` : `Last see ${get_time_in_words(time_in_minutes, last_seen_at)} ago`;
   const link_border =  online ? "#8eff00" : "#efefef";
+  const card_class =  online ? 'active' : '';
   return (
-    <Card color={link_border} id={name}>
+    <Card color={link_border} id={name} className={card_class}>
       <UserLogo><p>{emojis[emoji]}</p></UserLogo>
       <UserTextItem>User: <b>{name}</b></UserTextItem>
       <UserTextItem>Visits: <b>{visits}</b></UserTextItem>
@@ -73,7 +84,7 @@ function get_time_in_words(time, last_seen_at){
 
 function change_ip(string){
   return string.split(".")
-           .map((e,i) => i<3 ? e : "*")
+           .map((e,i) => i<3 ? e : e.replace(/[0-9]/g,"*"))
            .join(".")
 }
 
