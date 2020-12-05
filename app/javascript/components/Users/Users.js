@@ -2,7 +2,6 @@ import React, {useState, useEffect } from 'react';
 import axios from 'axios';
 import User from './User';
 import styled from 'styled-components';
-import Counter from '../../containers/Counter';
 
 const Home = styled.div`
   text-line: center;
@@ -17,13 +16,13 @@ const Home = styled.div`
   width: 100%;
   padding: 20px;
 
-  @media (max-device-width: 520px)   {
+  @media (max-width: 520px)   {
     grid-template-columns: auto;
   };
-  @media (min-device-width: 520px) {
+  @media (min-width: 520px) {
     grid-template-columns: repeat(2, 1fr);
   };
-  @media (min-width: 820px) {
+  @media (min-width: 920px) {
     grid-template-columns: repeat(3, 1fr);
   };
   @media (min-width: 1280px) {
@@ -57,7 +56,6 @@ const Users = () => {
 
   return (
     <Home>
-      <Counter attributes={online_user_counter}/>
       <Grid className="cards-grid">
         {grid}
       </Grid>
