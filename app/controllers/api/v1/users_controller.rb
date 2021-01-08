@@ -1,5 +1,3 @@
-require 'random_name_generator'
-
 module Api
   module V1
     class UsersController < ApplicationController
@@ -37,29 +35,29 @@ module Api
       end
 
       def authenticate!
-        current_user = User.find_by(ip_address: ip_addr, device: device_name)
+        current_user = User.find_by(ip_address: get_ip_address, device: get_device_name)
 
         if current_user.present?
           current_user.refresh_activity
         else
-          current_user = User.create(name: user_name, device: device_name, ip_address: ip_addr)
+          current_user = User.create(name: get_user_name, device: get_device_name, ip_address: get_ip_address)
         end
         session['user_id'] = current_user.id
       end
 
-      def device_name
+      def get_user_name
+        Faker::Movies::LordOfTheRings.character
+      end
+
+      def get_device_name
         agent = request.user_agent
         return 'tablet' if agent =~ /(tablet|ipad)|(android(?!.*mobile))/i
         return 'mobile' if agent =~ /Mobile/
         return 'desktop'
       end
 
-      def ip_addr
+      def get_ip_address
         request.remote_ip == '::1' ? '192.168.0.1' : request.remote_ip.to_s
-      end
-
-      def user_name
-        RandomNameGenerator.new(RandomNameGenerator::GOBLIN).compose(2)
       end
 
     end
