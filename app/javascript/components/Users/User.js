@@ -51,7 +51,7 @@ const User = (props) =>{
   const {name, ip_address, device, emoji, last_seen_at, visits, online} = props.attributes.attributes;
   const time_in_minutes = Math.round((date_in_seconds - last_seen_at)/60);
 
-  const status = online ? `Online` : `Last see ${get_time_in_words(time_in_minutes, last_seen_at)} ago`;
+  const status = online ? `Online` : `Last seen ${get_time_in_words(time_in_minutes, last_seen_at)} ago`;
   const link_border =  online ? "#8eff00" : "#efefef";
   const card_class =  online ? 'active' : '';
   return (
@@ -82,8 +82,8 @@ function get_time_in_words(time, last_seen_at){
   }
 }
 
-function change_ip(string){
-  return string.split(".")
+function change_ip(ip_address){
+  return ip_address.split(".")
            .map((e,i) => i<3 ? e : e.replace(/[0-9]/g,"*"))
            .join(".")
 }

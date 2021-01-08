@@ -32,12 +32,11 @@ gem 'jbuilder', '~> 2.5'
 
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', '>= 1.1.0', require: false
+# Faker is used to easily generate fake data: names, addresses, phone numbers, etc.
+gem 'faker'
 
 # Client library for Amazon's Simple Email Service's REST API
 gem 'fast_jsonapi', '~> 1.1', '>= 1.1.1'
-
-# Random name generator
-gem 'random_name_generator'
 
 # Pagination library for Rails, Sinatra, Merb, DataMapper, and more
 gem 'will_paginate', '~> 3.1.0'
