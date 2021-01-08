@@ -13,13 +13,13 @@ module Api
 
         render json: UserSerializer.new(users).serialized_json
       end
-      
+
       def show
         user = User.find_by(id: params[:id])
 
         render json: UserSerializer.new(user).serialized_json
       end
-      
+
       def create
         user = User.new(user_params)
 
@@ -38,7 +38,7 @@ module Api
 
       def authenticate!
         current_user = User.find_by(ip_address: ip_addr, device: device_name)
-        
+
         if current_user.present?
           current_user.refresh_activity
         else
@@ -49,13 +49,13 @@ module Api
 
       def device_name
         agent = request.user_agent
-        return "tablet" if agent =~ /(tablet|ipad)|(android(?!.*mobile))/i
-        return "mobile" if agent =~ /Mobile/
-        return "desktop"
+        return 'tablet' if agent =~ /(tablet|ipad)|(android(?!.*mobile))/i
+        return 'mobile' if agent =~ /Mobile/
+        return 'desktop'
       end
 
       def ip_addr
-        request.remote_ip == "::1" ? "192.168.0.1" : request.remote_ip.to_s
+        request.remote_ip == '::1' ? '192.168.0.1' : request.remote_ip.to_s
       end
 
       def user_name
